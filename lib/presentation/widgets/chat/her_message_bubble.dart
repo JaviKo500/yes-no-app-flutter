@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:yes_no_app/domain/entities/message.dart';
 
 class HerMessageBubble extends StatelessWidget {
-  const HerMessageBubble({Key? key}) : super(key: key);
+  final Message message;
+  const HerMessageBubble({required this.message, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +15,10 @@ class HerMessageBubble extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
               color: colors.secondary, borderRadius: BorderRadius.circular(20)),
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Text('Kame me kame ha',
-                style: TextStyle(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Text(message.text,
+                style: const TextStyle(
                   color: Colors.white,
                 )),
           ),
@@ -24,7 +26,7 @@ class HerMessageBubble extends StatelessWidget {
         const SizedBox(
           height: 5,
         ),
-        const _ImageBubble(),
+        _ImageBubble( imageUrl: message.imageUrl! ),
         const SizedBox(
           height: 20,
         ),
@@ -34,7 +36,11 @@ class HerMessageBubble extends StatelessWidget {
 }
 
 class _ImageBubble extends StatelessWidget {
-  const _ImageBubble({Key? key}) : super(key: key);
+  final String imageUrl;
+  const _ImageBubble({
+    required this.imageUrl,
+    Key? key
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +48,7 @@ class _ImageBubble extends StatelessWidget {
     return ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Image.network(
-          'https://yesno.wtf/assets/no/23-5fe6c1ca6c78e7bf9a7cf43e406fb8db.gif',
+          imageUrl,
           width: size.width * 0.7,
           height: 150,
           fit: BoxFit.cover,
@@ -51,11 +57,8 @@ class _ImageBubble extends StatelessWidget {
             return Container(
               width: size.width * 0.7,
               height: 150,
-              padding: const EdgeInsets.symmetric( horizontal: 10, vertical: 5),
-              child: const Text(
-                'Kokun writing',
-                style: TextStyle()
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: const Text('hers writing', style: TextStyle()),
             );
           },
         ));
